@@ -20,6 +20,10 @@ To run the app:
     * git clone [https://github.com/Anskiere1974/frontend-nanodegree-arcade-game.git](https://github.com/Anskiere1974/frontend-nanodegree-arcade-game.git)
 2. Open a browser window and navigate to the index.html file in your application's directory.
 
+## Links to Github Repository (Master Branch)
+* GitHub Repository: [https://github.com/Anskiere1974/frontend-nanodegree-arcade-game](https://github.com/Anskiere1974/frontend-nanodegree-arcade-game)
+* GitHub Demo: [https://anskiere1974.github.io/frontend-nanodegree-arcade-game/](https://anskiere1974.github.io/frontend-nanodegree-arcade-game/)
+
 ## How to play
 
 Our hero starts in the grass on the bottom. He has to cross the streets - avoiding all those nasty bugs - to reach the lovely princess. You can move by using the up, down, left and right arrow buttons. If you collide with a bug, you will lose a life. If you have zero lives you will lose the game. Everytime you reach the princess you score one point. If you get five points, you win and the lovely princess will be your prom date.
@@ -27,7 +31,4 @@ Our hero starts in the grass on the bottom. He has to cross the streets - avoidi
 ## Project Requirements
 **Students should use this rubric for self-checking their submission:**
 
-[GitHub Pages](https://pages.github.com/)
-
-https://github.com/Anskiere1974/frontend-nanodegree-arcade-game.git
-https://github.com/Anskiere1974/frontend-nanodegree-arcade-game/archive/master.zip
+[Classic Arcade Game rubric](https://review.udacity.com/#!/rubrics/15/view)
