@@ -1,13 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Effective JavaScript: Frogger</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>Effective JavaScript: Frogger</title>
+  <!-- Time for some Retro Arcade Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <!-- More fancy fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <!-- Import Font Awesome Icons -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Get my own styles -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <script src="js/resources.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/engine.js"></script>
+
+  <!-- Scoreboard -->
+  <div class="scoreboard">
+    <h1 class="game-title">Frogger Arcade</h1>
+    <div class="score-wrapper cf">
+      <p class="game-score">
+      Score:<span id="score"></span>
+      </p>
+      <p class="game-lives">
+      Lives:<span id="lives"></span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Gameboard -->
+  <div id="gameboard"></div>
+
+  <!-- Menue -->
+  <div class="menue-wrapper">
+      <a href="#" id="new-game" class="btn-green">New Game</a>
+      <a href="#" id="howto" class="btn-green">How to Play</a>
+  </div>
+
+  <!-- Overlay Modal with Manual -->
+  <div id="overlay">
+    <div class="manual">
+      <h2>How to play!</h2>
+      <p>
+        Our hero starts in the grass on the bottom. He has to cross the streets - avoiding all those nasty bugs - to reach the lovely princess.
+      </p>
+      <p>
+        You can move by using the up, down, left and right arrow buttons.
+      </p>
+      <p>
+        If you collide with a bug, you will lose a life. If you have zero lives you will lose the game.
+      </p>
+      <p>
+        Everytime you reach the princess you score one point. If you get five points, you win and the lovely princess will be your prom date.
+      </p>
+      <p>
+        By the way: The font - Press Start 2P - used with this project is a pixel based font based on the font design from 1980s Namco arcade games.
+      </p>
+      <p class="closer">
+        <span id="close"><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+      </p>
+    </div>
+  </div>
+  <script src="js/resources.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/engine.js"></script>
 </body>
 </html>

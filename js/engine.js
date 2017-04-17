@@ -27,7 +27,8 @@ var Engine = (function(global) {
 
     canvas.width = 505;
     canvas.height = 606;
-    doc.body.appendChild(canvas);
+    // I will reposition the canvas for layout reasons
+    document.getElementById('gameboard').appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -78,9 +79,11 @@ var Engine = (function(global) {
      * functionality this way (you could just implement collision detection
      * on the entities themselves within your app.js file).
      */
+
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions(allEnemies, player);
+        checkPrincess(player, princess);
     }
 
     /* This is called by the update function and loops through all of the
@@ -107,36 +110,42 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
-            ],
-            numRows = 6,
-            numCols = 5,
-            row, col;
+        if (game.state === 0) {
+            var rowImages = [
+                    'images/grass-block.png', // Top row is grass
+                    'images/stone-block.png', // Row 1 of 3 of stone
+                    'images/stone-block.png', // Row 2 of 3 of stone
+                    'images/stone-block.png', // Row 3 of 3 of stone
+                    'images/grass-block.png', // Row 1 of 2 of grass
+                    'images/grass-block.png' // Row 2 of 2 of grass
+                ],
+                numRows = 6,
+                numCols = 5,
+                row, col;
 
-        /* Loop through the number of rows and columns we've defined above
-         * and, using the rowImages array, draw the correct image for that
-         * portion of the "grid"
-         */
-        for (row = 0; row < numRows; row++) {
-            for (col = 0; col < numCols; col++) {
-                /* The drawImage function of the canvas' context element
-                 * requires 3 parameters: the image to draw, the x coordinate
-                 * to start drawing and the y coordinate to start drawing.
-                 * We're using our Resources helpers to refer to our images
-                 * so that we get the benefits of caching these images, since
-                 * we're using them over and over.
-                 */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+            /* Loop through the number of rows and columns we've defined above
+             * and, using the rowImages array, draw the correct image for that
+             * portion of the "grid"
+             */
+            for (row = 0; row < numRows; row++) {
+                for (col = 0; col < numCols; col++) {
+                    /* The drawImage function of the canvas' context element
+                     * requires 3 parameters: the image to draw, the x coordinate
+                     * to start drawing and the y coordinate to start drawing.
+                     * We're using our Resources helpers to refer to our images
+                     * so that we get the benefits of caching these images, since
+                     * we're using them over and over.
+                     */
+                    ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                }
             }
-        }
 
-        renderEntities();
+            renderEntities();
+        } else if (game.state === 1) {
+            pen("Congrats You win", canvas.width / 2, canvas.height / 2);
+        } else if (game.state === 2) {
+            pen("Sorry You Lost", canvas.width / 2, canvas.height / 2);
+        }
     }
 
     /* This function is called by the render function and is called on each game
@@ -152,6 +161,7 @@ var Engine = (function(global) {
         });
 
         player.render();
+        princess.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -159,7 +169,20 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        //at the start of every new Game we have to initialize the scoreboard
+        document.getElementById('score').innerHTML = game.score;
+        document.getElementById('lives').innerHTML = game.lives;
+    }
+
+    // for writing out various messages we define our own pen
+    function pen(message, posX, posY) {
+        ctx.font = '30px "Press Start 2P"';
+        ctx.textAlign = 'center';
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 3;
+        ctx.strokeText(message, posX, posY);
+        ctx.fillStyle = "#fff";
+        ctx.fillText(message, posX, posY);
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -171,7 +194,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy-new.png',
+        'images/char-princess-girl.png',
     ]);
     Resources.onReady(init);
 
@@ -180,4 +204,22 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+
+    /* EventListener watching the new game button*/
+    var elem = document.getElementById('new-game');
+    elem.addEventListener('click', function() {
+        game.resetGame();
+    });
+
+    /* EventListener watching the close sign in the manual */
+    var elem2 = document.getElementById('close');
+    elem2.addEventListener('click', function() {
+        document.getElementById('overlay').style.visibility = "hidden";
+    });
+
+    /* EventListener watching the howto sign */
+    var elem3 = document.getElementById('howto');
+    elem3.addEventListener('click', function() {
+        document.getElementById('overlay').style.visibility = "visible";
+    });
 })(this);
